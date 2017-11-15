@@ -8,12 +8,29 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"regexp"
 	"time"
 )
 
 func elizaResponse(inputStr string) string {
-	//return random string output
+	/*
+		*	Problem 1
+		*
+		//return random string output
+		input := inputStr
+		rand.Seed(time.Now().UTC().UnixNano())
+		answers := []string{
+			"I’m not sure what you’re trying to say. Could you explain it to me?",
+			"How does that make you feel?",
+			"Why do you say that?",
+		}
+
+		response := "input :" + input + " \noutput :" + answers[rand.Intn(len(answers))]
+	*/
 	input := inputStr
+	pattern := `.*father.*`
+	output := "why dont you tell me more about your father?"
+	response := ""
 	rand.Seed(time.Now().UTC().UnixNano())
 	answers := []string{
 		"I’m not sure what you’re trying to say. Could you explain it to me?",
@@ -21,7 +38,12 @@ func elizaResponse(inputStr string) string {
 		"Why do you say that?",
 	}
 
-	response := "input :" + input + " \noutput :" + answers[rand.Intn(len(answers))]
+	//check if pattern is fouund in string
+	if matched, _ := regexp.MatchString(pattern, input); matched {
+		response = "input :" + input + " \noutput :" + output
+	} else {
+		response = "input :" + input + " \noutput :" + answers[rand.Intn(len(answers))]
+	}
 	return response
 } //elizaResponse
 
