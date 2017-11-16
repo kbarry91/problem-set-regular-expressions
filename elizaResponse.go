@@ -29,7 +29,7 @@ func elizaResponse(inputStr string) string {
 	*/
 	input := inputStr
 	pattern := `.*father.*`
-	pattern2 := `I am (.*)`
+	pattern2 := []string{`.*i am(.*)`, `.*I AM(.*)`, `.*I'm(.*)`, `.*i'm(.*)`, `.*im(.*)`, `.*I am(.*)`}
 	output := "why dont you tell me more about your father?"
 	response := ""
 	rand.Seed(time.Now().UTC().UnixNano())
@@ -40,16 +40,29 @@ func elizaResponse(inputStr string) string {
 		"Why do you say that?",
 	}
 
-	re := regexp.MustCompile(pattern2)
 	//check if pattern is fouund in string (father/I am)
 	if matched, _ := regexp.MatchString(pattern, input); matched {
 		response = "input :" + input + "\noutput :" + output
-	} else if re.MatchString(input) {
-		match := re.ReplaceAllString(input, "How do you know you are $1?")
-		response = "input :" + input + " \noutput : " + match
+		//} //else if re.MatchString(input) {
+		//match := re.ReplaceAllString(input, "How do you know you are $1?")
+		//response = "input :" + input + " \noutput : " + match
 	} else {
 		response = "input :" + input + " \noutput :" + answers[rand.Intn(len(answers))]
 	}
+
+	// loop through pattern2 array
+	//if pattern is found extract substring
+	//set response
+	for _, checkPattern := range pattern2 {
+		re := regexp.MustCompile(checkPattern)
+		if re.MatchString(input) {
+			match := re.ReplaceAllString(input, "How do you know you are $1?")
+			response = "input :" + input + " \noutput : " + match
+			return response
+
+		} //if re.MatchString
+	} //for pattern2
+
 	return response
 } //elizaResponse
 
