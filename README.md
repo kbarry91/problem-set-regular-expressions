@@ -16,7 +16,7 @@ There is two ways to run this program
 ```
 go build elizaResponses.go
 ```
-This will create a .exe file in your current directory.To launch the server and run the file 
+This will create a .exe file in your current directory.To Run the program enter
 ```
 elizaResponses
 ```
